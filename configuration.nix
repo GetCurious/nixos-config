@@ -12,7 +12,13 @@
 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+	  # vscode-server
+      # (fetchTarball "https://github.com/nix-community/nixos-vscode-server/tarball/master")
     ];
+
+  # vscode-server
+  # services.vscode-server.enable = true;
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -125,8 +131,6 @@
     home-manager
     micro
     tmux
-    neovim
-    xclip
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -150,10 +154,33 @@
   };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+  networking.firewall.allowedUDPPorts = [
+  	10000
+  ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  # nginx
+  services.nginx = {
+  	enable = true;
+    virtualHosts = {
+      "192.168.0.195" = {
+        listen = [ { addr = "0.0.0.0"; port = 80; } ];
+        locations."/" = {
+          proxyPass = "http://localhost:8080/";
+          extraConfig = ''
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+          '';
+        };
+      };
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -174,14 +201,6 @@
     newSession = true;
     terminal = "screen-256color";
     escapeTime = 0;
-  };
-
-  # neovim
-  programs.neovim = {
-    enable = true;
-    withNodeJs = true;
-    vimAlias = true;
-    viAlias = true;
   };
 
   # env variables

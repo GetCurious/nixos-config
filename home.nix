@@ -2,17 +2,22 @@
 {
   home = {
     packages = with pkgs; [
+    	# language
     	gleam
     	go
-    	luarocks
-    	fd
-    	ripgrep
-    	lazygit
-    	gcc
-	    tree-sitter
-	    fzf
+    	gopls
+    	pnpm
+
+    	# apps
 	    brave
 		jetbrains.rider
+
+		# etc
+		wget
+
+		# for micro plugins
+		ctags
+		fzf
     ];
 
     username = "naton";
@@ -21,9 +26,9 @@
     stateVersion = "24.05";
   };
 
-  programs.vscode = {
+  programs.vscode-fhs = {
   	enable = true;
-  	package = pkgs-unstable.vscode;
+  	package = pkgs-unstable.vscode-fhs;
   };
 }
 

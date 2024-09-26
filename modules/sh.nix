@@ -3,10 +3,10 @@ let
   myAliases = {
     sudo = "sudo ";
     cat = "bat";
-    ls = "eza -n";
-    ll = "eza -ln";
+    ls = "eza";
+    ll = "eza -l";
+    tree = "eza --tree";
     micro = "TERM=xterm-256color micro"; # fix alt+arrow in tmux
-    vi = "TERM=xterm-256color vi"; # fix for tmux
     nix-config = "sudo micro /etc/nixos/configuration.nix";
     nix-home = "sudo micro /etc/nixos/home.nix";
     nix-update = "sudo nixos-rebuild switch --flake /etc/nixos#nixos";
@@ -28,8 +28,8 @@ in
   	  enable = true;
   	  theme = "robbyrussell";
   	  plugins = [
-  	    "git"
-  		  "history"
+        "git"
+        "history"
   	  ];
   	};
   };

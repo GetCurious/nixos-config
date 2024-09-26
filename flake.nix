@@ -31,7 +31,9 @@
           specialArgs = {
             inherit pkgs-unstable;
           };
-  	  		modules = [ ./configuration.nix ];
+  	  		modules = [ 
+  	  		  ./configuration.nix
+  	  		];
   	  	};
   	  };
   	  
